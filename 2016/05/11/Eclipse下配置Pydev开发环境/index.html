@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="数据科学, 机器学习, 数据挖掘, 生物信息学" />
+  <meta name="keywords" content="Pydev,Python," />
 
 
 
@@ -84,15 +84,29 @@
 
 
 
-<meta name="description" content="机器学习，数据挖掘，生物信息学">
-<meta property="og:type" content="website">
-<meta property="og:title" content="数据小工">
-<meta property="og:url" content="http://qgzang.github.io/index.html">
+<meta name="description" content="前言在自己电脑上安装的是Anaconda Python环境，之前用Spyder IDE开发，这个IDE比较好用，但是最近不知何故，装了几个Python包以后突然挂了。自己又比较想在Eclipse里把Python，Perl，Scala等环境都配置好，所有选择在Eclipse下安装Pydev插件。
+更新
+2016-05-11: 在window10/JDK8/Anaconda_Python2.7环境下安">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eclipse下配置Pydev开发环境">
+<meta property="og:url" content="http://qgzang.github.io/2016/05/11/Eclipse下配置Pydev开发环境/index.html">
 <meta property="og:site_name" content="数据小工">
-<meta property="og:description" content="机器学习，数据挖掘，生物信息学">
+<meta property="og:description" content="前言在自己电脑上安装的是Anaconda Python环境，之前用Spyder IDE开发，这个IDE比较好用，但是最近不知何故，装了几个Python包以后突然挂了。自己又比较想在Eclipse里把Python，Perl，Scala等环境都配置好，所有选择在Eclipse下安装Pydev插件。
+更新
+2016-05-11: 在window10/JDK8/Anaconda_Python2.7环境下安">
+<meta property="og:image" content="http://qgzang.github.io/o_1.png">
+<meta property="og:image" content="http://qgzang.github.io/o_2.png">
+<meta property="og:image" content="http://qgzang.github.io/o_3.png">
+<meta property="og:image" content="http://qgzang.github.io/o_4.png">
+<meta property="og:image" content="http://qgzang.github.io/o_5.png">
+<meta property="og:image" content="http://qgzang.github.io/o_6.png">
+<meta property="og:updated_time" content="2016-05-11T06:56:47.222Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据小工">
-<meta name="twitter:description" content="机器学习，数据挖掘，生物信息学">
+<meta name="twitter:title" content="Eclipse下配置Pydev开发环境">
+<meta name="twitter:description" content="前言在自己电脑上安装的是Anaconda Python环境，之前用Spyder IDE开发，这个IDE比较好用，但是最近不知何故，装了几个Python包以后突然挂了。自己又比较想在Eclipse里把Python，Perl，Scala等环境都配置好，所有选择在Eclipse下安装Pydev插件。
+更新
+2016-05-11: 在window10/JDK8/Anaconda_Python2.7环境下安">
+<meta name="twitter:image" content="http://qgzang.github.io/o_1.png">
 
 
 
@@ -110,7 +124,7 @@
   };
 </script>
 
-  <title> 数据小工 </title>
+  <title> Eclipse下配置Pydev开发环境 | 数据小工 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -141,9 +155,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -270,9 +282,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -292,10 +304,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/05/11/Eclipse下配置Pydev开发环境/" itemprop="url">
-                  Eclipse下配置Pydev开发环境
-                </a>
+                Eclipse下配置Pydev开发环境
               
             
           </h1>
@@ -370,340 +379,126 @@
       
 
       
-        
-          
-          前言在自己电脑上安装的是Anaconda Python环境，之前用Spyder IDE开发，这个IDE比较好用，但是最近不知何故，装了几个Python包以后突然挂了。自己又比较想在Eclipse里把Python，Perl，Scala等环境都配置好，所有选择在Eclipse下安装Pydev插件。
-更新
-2016-05-11: 在window10/JDK8/Anaconda_Python2.7环境下安装Pydev
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在自己电脑上安装的是Anaconda Python环境，之前用<a href="https://github.com/spyder-ide" target="_blank" rel="external">Spyder</a> IDE开发，这个IDE比较好用，但是最近不知何故，装了几个Python包以后突然挂了。自己又比较想在Eclipse里把Python，Perl，Scala等环境都配置好，所有选择在Eclipse下安装Pydev插件。</p>
+<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><ul>
+<li>2016-05-11: 在window10/JDK8/Anaconda_Python2.7环境下安装Pydev</li>
+</ul>
+<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><p><a href="http://pydev.org" target="_blank" rel="external">Pydev</a> 官方网站，在里面简单看下安装环境需求。</p>
+<blockquote>
+<p>Release 5.0.0</p>
+<ul>
+<li>Important PyDev now requires Java 8.</li>
+<li>PyDev 4.5.5 is the last release supporting Java 7.</li>
+</ul>
+</blockquote>
+<p>这里明确写了装最新版本的Pydev需要JDK8, 我采用的是Eclipse在线安装，会安装最新版本。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
+<li>启动Eclipse, 点击Help-&gt;Install New Software…   </li>
+<li>在弹出的对话框中，点Add 按钮。  Name中填:Pydev,  Location中填<a href="http://pydev.org/updates" target="_blank" rel="external">http://pydev.org/updates</a></li>
+</ul>
+<p><img src="/o_1.png" alt="image"></p>
+<p>下一步：</p>
+<p><img src="/o_2.png" alt="image"></p>
+<p>然后一步一步装下去。如果装的过程中，报错了,请尝试直接从官网下载安装包，<a href="http://blog.csdn.net/chenlia/article/details/7043693" target="_blank" rel="external">解压添加到eclipse里的方式</a>。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>安装好pydev后,需要配置Python解释器</p>
+<ul>
+<li>在Eclipse菜单栏中,点击Windows-&gt;Preferences.   </li>
+<li>在对话框中，点击pyDev-&gt;Interpreter-Python.<ul>
+<li>点击New按钮,选择python.exe的路径,打开后显示出一个包含很多复选框的窗口. 点OK.</li>
+<li>或者直接点击Quick Auto-config按钮，我安装的是Anaconda测试时可以直接设置的。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/o_3.png" alt="image"></p>
+<h1 id="安装检查"><a href="#安装检查" class="headerlink" title="安装检查"></a>安装检查</h1><p>这里就要在eclipse里新建一个Python项目，测试是否安装成功。</p>
+<ul>
+<li>启动Eclipse,  创建一个新的项目,   File-&gt;New-&gt;Projects…   选择PyDev-&gt;PyDevProject 输入项目名称.</li>
+</ul>
+<p><img src="/o_4.png" alt="image"></p>
+<p>在src文件夹上右键，新建pyDev Package.</p>
+<p><img src="/o_5.png" alt="image"></p>
+<p>然后在<strong>init</strong>.py下面输入:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print &quot;hello world!&quot;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/o_6.png" alt="image"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://www.cnblogs.com/Bonker/p/3584707.html" target="_blank" rel="external">Bonker的博客</a></li>
+<li><a href="http://pydev.org" target="_blank" rel="external">Pydev官网</a></li>
+</ul>
 
-下载Pydev 官方网站，在里面简单看下安装环境需求。
+      
+    </div>
 
-Release 5.0.0
-
-Important PyDev now requires Java 8.
-PyDev 4.5.5
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/11/Eclipse下配置Pydev开发环境/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+    <div>
+      
         
       
     </div>
 
     <div>
       
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="qgzang@USTC WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="qgzang@USTC Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
     </div>
+  </div>
 
-    <div>
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/11/JDK8安装与配置/" itemprop="url">
-                  'JDK8安装与配置'
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-11T11:31:49+08:00" content="2016-05-11">
-              2016-05-11
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/教程/" itemprop="url" rel="index">
-                    <span itemprop="name">教程</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
+            <a href="/tags/Pydev/" rel="tag">#Pydev</a>
           
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/11/JDK8安装与配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/11/JDK8安装与配置/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/05/11/JDK8安装与配置/" class="leancloud_visitors" data-flag-title="'JDK8安装与配置'">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
+            <a href="/tags/Python/" rel="tag">#Python</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-          前言最近在准备面试，对java,c,python很多忘记的知识都要回顾下，所以准备在eclipse下把自己常用的环境配置好，包括Python,Perl,Java,Scala. 很多人可能会问各种语言都有自己比较好的IDE可以选择，为什么用eclipse，原因就在于装多个IDE实在是太浪费时间和资源，还不如都集成在eclipse里。
-在这一篇博文里，我主要介绍JDK8的安装和配置。
-更新
-v1.0
-2016.05.11: JDK8基本的安装和配置
-
-
-
-下载  从oracle官网下载JDK8，关于JDK版本问题，一方面是JDK8有很多新特性，另一方面是在安装Pydev插件的时候，发现最新的版本只
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/11/JDK8安装与配置/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/11/JDK8安装与配置/" rel="next" title="'JDK8安装与配置'">
+                <i class="fa fa-chevron-left"></i> 'JDK8安装与配置'
+              </a>
+            
           </div>
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/09/hello-world/" itemprop="url">
-                  搭建Hexo+github个人博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-09T21:13:06+08:00" content="2016-05-09">
-              2016-05-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/教程/" itemprop="url" rel="index">
-                    <span itemprop="name">教程</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/09/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/09/hello-world/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/05/09/hello-world/" class="leancloud_visitors" data-flag-title="搭建Hexo+github个人博客">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-          Hexo是一个静态网页框架，可以用于搭建个人博客和网站。 从中文说明文档 可以学习到更多相关的内容。同时可以在github上查看别人的讨论              GitHub.
-由于网上已经有很多相关的教程教大家怎么用hexo去搭建个人博客，所以在我的这篇博客里，我会写出安装过程中应该注意的要点，而不是详细的把每一个步骤都写上去，一则是markdown添加图片真的相当的麻烦，二来是想让后来人自己去实践.
-要点环境搭建
-
-github
-node.js
-cnpm (这个是推荐大家安装的，默认使用npm也是可以的，但是有时候速度会比较慢）
-hexo
-hexo next主题
-
-cnpm 安装其他的
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/09/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -711,6 +506,14 @@ cnpm 安装其他的
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/11/Eclipse下配置Pydev开发环境/"
+           data-title="Eclipse下配置Pydev开发环境" data-url="http://qgzang.github.io/2016/05/11/Eclipse下配置Pydev开发环境/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -730,8 +533,17 @@ cnpm 安装其他的
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -864,6 +676,17 @@ cnpm 安装其他的
       </section>
 
       
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新"><span class="nav-number">2.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载"><span class="nav-number">3.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">4.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">5.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装检查"><span class="nav-number">6.</span> <span class="nav-text">安装检查</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
 
     </div>
   </aside>
@@ -959,6 +782,10 @@ cnpm 安装其他的
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
