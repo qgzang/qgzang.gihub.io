@@ -84,28 +84,39 @@
 
 
 
-<meta name="description" content="前言算法原理算法复杂度
-时间复杂度
-空间复杂度
+<meta name="description" content="前言字符串匹配问题的形式定义：
 
-Python实现算法测试总结参考">
+文本(Text)是一个长度为 n 的字符串:T;
+模式(Pattern)是一个长度为 m 且 m≤n 的字符串:P;
+
+T 和 P 中的元素都属于有限的字母表 Σ 表;
+
+有效位移 (Valid Shift):如果 0≤ s ≤n-m，并且 T[s+1..s+m] = P[1..m]，即对 1≤j≤m，有 T[s+j] = P[j]，则说模式 P 在文本 T 中出">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符串匹配算法 之 朴素字符串匹配">
 <meta property="og:url" content="http://qgzang.github.io/2016/05/12/字符串匹配算法-之-朴素字符串匹配/index.html">
 <meta property="og:site_name" content="数据小工">
-<meta property="og:description" content="前言算法原理算法复杂度
-时间复杂度
-空间复杂度
+<meta property="og:description" content="前言字符串匹配问题的形式定义：
 
-Python实现算法测试总结参考">
-<meta property="og:updated_time" content="2016-05-12T03:50:33.501Z">
+文本(Text)是一个长度为 n 的字符串:T;
+模式(Pattern)是一个长度为 m 且 m≤n 的字符串:P;
+
+T 和 P 中的元素都属于有限的字母表 Σ 表;
+
+有效位移 (Valid Shift):如果 0≤ s ≤n-m，并且 T[s+1..s+m] = P[1..m]，即对 1≤j≤m，有 T[s+j] = P[j]，则说模式 P 在文本 T 中出">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-12_1.png">
+<meta property="og:updated_time" content="2016-05-12T08:21:33.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="字符串匹配算法 之 朴素字符串匹配">
-<meta name="twitter:description" content="前言算法原理算法复杂度
-时间复杂度
-空间复杂度
+<meta name="twitter:description" content="前言字符串匹配问题的形式定义：
 
-Python实现算法测试总结参考">
+文本(Text)是一个长度为 n 的字符串:T;
+模式(Pattern)是一个长度为 m 且 m≤n 的字符串:P;
+
+T 和 P 中的元素都属于有限的字母表 Σ 表;
+
+有效位移 (Valid Shift):如果 0≤ s ≤n-m，并且 T[s+1..s+m] = P[1..m]，即对 1≤j≤m，有 T[s+j] = P[j]，则说模式 P 在文本 T 中出">
+<meta name="twitter:image" content="http://qgzang.github.io/images/2016-05-12_1.png">
 
 
 
@@ -378,11 +389,34 @@ Python实现算法测试总结参考">
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><h1 id="算法复杂度"><a href="#算法复杂度" class="headerlink" title="算法复杂度"></a>算法复杂度</h1><ul>
-<li>时间复杂度</li>
-<li>空间复杂度</li>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>字符串匹配问题的形式定义：</p>
+<ul>
+<li>文本(Text)是一个长度为 n 的字符串:T;</li>
+<li>模式(Pattern)是一个长度为 m 且 m≤n 的字符串:P;</li>
 </ul>
-<h1 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h1><h1 id="算法测试"><a href="#算法测试" class="headerlink" title="算法测试"></a>算法测试</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1>
+<p>T 和 P 中的元素都属于有限的字母表 Σ 表;</p>
+<blockquote>
+<p>有效位移 (Valid Shift):<br>如果 0≤ s ≤n-m，并且 T[s+1..s+m] = P[1..m]，即对 1≤j≤m，有 T[s+j] = P[j]，则说模式 P 在文本 T 中出现且位移为 s，且称 s 是一个有效位移。</p>
+</blockquote>
+<p><img src="/images/2016-05-12_1.png" alt="image"></p>
+<p>比如上图中，目标是找出所有在文本 T = abcabaabcabac 中模式 P = abaa 的所有出现。该模式在此文本中仅出现一次，即在位移 s = 3 处，位移 s = 3 是有效位移。</p>
+<p>本文介绍的是字符串匹配最简单的算法——朴素字符串匹配算法。该算法的原理非常简单，就是通过一个循环找到所有有效偏移，即对检查是否满足条件。算法没有进行预处理，只是对其进行匹配处理。</p>
+<h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><h1 id="算法复杂度"><a href="#算法复杂度" class="headerlink" title="算法复杂度"></a>算法复杂度</h1><ul>
+<li><p>时间复杂度</p>
+<p>  时间复杂度是非常大: O((n-m+1)m)</p>
+</li>
+<li><p>空间复杂度</p>
+<p>  空间复杂度：O(m+n)</p>
+</li>
+</ul>
+<h1 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">def nativeStringMatcher(t, p):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    :param t: the string to check</span><br><span class="line">    :param p: pattern</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    n = len(t)</span><br><span class="line">    m = len(p)</span><br><span class="line">    for s in xrange(0, n-m+1):</span><br><span class="line">        if p == t[s:s+m]:</span><br><span class="line">            print &apos;Pattern occurs with shift %d&apos; % s</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    t = &quot;CGTCGATCGCGCTACGTCGACGTACGGCAGCCAGCGACGTCGCTTTCACGACGTCGTCAGCACCGTCGGATCCGTCG&quot;</span><br><span class="line">    p = &quot;CGTCG&quot;</span><br><span class="line">    nativeStringMatcher(t,p)</span><br></pre></td></tr></table></figure>
+<h1 id="算法测试"><a href="#算法测试" class="headerlink" title="算法测试"></a>算法测试</h1><p>执行完的结果如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Pattern occurs with shift 0</span><br><span class="line">Pattern occurs with shift 14</span><br><span class="line">Pattern occurs with shift 37</span><br><span class="line">Pattern occurs with shift 51</span><br><span class="line">Pattern occurs with shift 63</span><br><span class="line">Pattern occurs with shift 72</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>朴素字符串匹配是遍历一遍文本字符串，对于短文本还可以接受，如果文本过长或者模式串比较多，那就很麻烦了。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://www.cnblogs.com/gaochundong/p/string_matching.html" target="_blank" rel="external">cnblogs上的博客</a></li>
+<li><a href="http://my.oschina.net/leopardsaga/blog/101421" target="_blank" rel="external">oschina上的博客</a></li>
+</ul>
+
       
     </div>
 
