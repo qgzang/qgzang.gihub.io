@@ -105,7 +105,7 @@ T 和 P 中的元素都属于有限的字母表 Σ 表;
 
 有效位移 (Valid Shift):如果 0≤ s ≤n-m，并且 T[s+1..s+m] = P[1..m]，即对 1≤j≤m，有 T[s+j] = P[j]，则说模式 P 在文本 T 中出">
 <meta property="og:image" content="http://qgzang.github.io/images/2016-05-12_1.png">
-<meta property="og:updated_time" content="2016-05-12T08:26:37.551Z">
+<meta property="og:updated_time" content="2016-05-12T08:36:57.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="字符串匹配算法 之 朴素字符串匹配">
 <meta name="twitter:description" content="前言字符串匹配问题的形式定义：
@@ -398,9 +398,8 @@ T 和 P 中的元素都属于有限的字母表 Σ 表;
 <blockquote>
 <p>有效位移 (Valid Shift):<br>如果 0≤ s ≤n-m，并且 T[s+1..s+m] = P[1..m]，即对 1≤j≤m，有 T[s+j] = P[j]，则说模式 P 在文本 T 中出现且位移为 s，且称 s 是一个有效位移。</p>
 </blockquote>
-<ul>
-<li><img src="/images/2016-05-12_1.png" alt="image"></li>
-</ul>
+<p>字符串匹配示意图如下:</p>
+<p>  <img src="/images/2016-05-12_1.png" alt="image"></p>
 <p>比如上图中，目标是找出所有在文本 T = abcabaabcabac 中模式 P = abaa 的所有出现。该模式在此文本中仅出现一次，即在位移 s = 3 处，位移 s = 3 是有效位移。</p>
 <p>本文介绍的是字符串匹配最简单的算法——朴素字符串匹配算法。该算法的原理非常简单，就是通过一个循环找到所有有效偏移，即对检查是否满足条件。算法没有进行预处理，只是对其进行匹配处理。</p>
 <h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><h1 id="算法复杂度"><a href="#算法复杂度" class="headerlink" title="算法复杂度"></a>算法复杂度</h1><ul>
