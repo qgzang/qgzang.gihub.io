@@ -1,0 +1,970 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="深度学习,神经网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="(1)
+
+九十年代末, 神经网络研究遇到的困境,除了慢,还是慢.
+抛开计算速度的因素,传统神经网络的反向传播算法,捉虫时极为困难,一个根本的问题叫做所谓 vanishing gradient problem (梯度消失问题).
+这个问题在1991年, 被德国学者 Sepp Hochreiter (wiki | homepage)第一次清晰提出和阐明原因.
+简单的说, 就是成本函数 (cost f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（转） 深度学习有多深？学了究竟有几分？ 之 四">
+<meta property="og:url" content="http://qgzang.github.io/2016/05/19/深度学习有多深？学了究竟有几分？-四/index.html">
+<meta property="og:site_name" content="数据小工">
+<meta property="og:description" content="(1)
+
+九十年代末, 神经网络研究遇到的困境,除了慢,还是慢.
+抛开计算速度的因素,传统神经网络的反向传播算法,捉虫时极为困难,一个根本的问题叫做所谓 vanishing gradient problem (梯度消失问题).
+这个问题在1991年, 被德国学者 Sepp Hochreiter (wiki | homepage)第一次清晰提出和阐明原因.
+简单的说, 就是成本函数 (cost f">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-19_10.png">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-19_11.png">
+<meta property="og:updated_time" content="2016-05-19T12:57:35.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="（转） 深度学习有多深？学了究竟有几分？ 之 四">
+<meta name="twitter:description" content="(1)
+
+九十年代末, 神经网络研究遇到的困境,除了慢,还是慢.
+抛开计算速度的因素,传统神经网络的反向传播算法,捉虫时极为困难,一个根本的问题叫做所谓 vanishing gradient problem (梯度消失问题).
+这个问题在1991年, 被德国学者 Sepp Hochreiter (wiki | homepage)第一次清晰提出和阐明原因.
+简单的说, 就是成本函数 (cost f">
+<meta name="twitter:image" content="http://qgzang.github.io/images/2016-05-19_10.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6282576673003013000,
+      author: '博主大大'
+    }
+  };
+</script>
+
+  <title> （转） 深度学习有多深？学了究竟有几分？ 之 四 | 数据小工 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?120ce9676d9776664e77da7970fbe0bf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">数据小工</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">数据分析实践者</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'j9cF3CsVQsBP9aGfCbRw','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                （转） 深度学习有多深？学了究竟有几分？ 之 四
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-19T20:27:44+08:00" content="2016-05-19">
+              2016-05-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/深度神经网络历史-深度学习有多深？学了究竟有几分？/" itemprop="url" rel="index">
+                    <span itemprop="name">深度神经网络历史:深度学习有多深？学了究竟有几分？</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/19/深度学习有多深？学了究竟有几分？-四/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/19/深度学习有多深？学了究竟有几分？-四/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/19/深度学习有多深？学了究竟有几分？-四/" class="leancloud_visitors" data-flag-title="（转） 深度学习有多深？学了究竟有几分？ 之 四">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><strong>(1)</strong></li>
+</ul>
+<p>九十年代末, 神经网络研究遇到的困境,除了慢,还是慢.</p>
+<p>抛开计算速度的因素,传统神经网络的反向传播算法,捉虫时极为困难,一个根本的问题叫做所谓 vanishing gradient problem (梯度消失问题).</p>
+<p>这个问题在1991年, 被德国学者 Sepp Hochreiter (<a href="https://en.wikipedia.org/wiki/Sepp_Hochreiter" target="_blank" rel="external">wiki</a> | <a href="http://www.bioinf.jku.at/people/hochreiter/" target="_blank" rel="external">homepage</a>)第一次清晰提出和阐明原因.</p>
+<p>简单的说, 就是成本函数 (cost function)从输出层反向传播时, 每经过一层,梯度衰减速度极快,  学习速度变得极慢, 神经网络很容易停滞于局部最优解而无法自拔.</p>
+<p>这就像原始部落的小混混,山中无老虎时,在本地称王称霸很舒服. 但任何关于”外面的世界很精彩”的信息, 在落后的层层传播机制中被噪音混淆淹没了.</p>
+<p>小混混一辈子很开心, 没有意识到外面的世界有多大, 也从未想出去多看看.</p>
+<hr>
+<ul>
+<li><strong>(2)</strong></li>
+</ul>
+<p>支持向量机 (SVM) 技术在图像和语音识别方面的成功, 使得神经网络的研究重新陷入低潮.</p>
+<p>SVM 理论上更加严谨完备, 结果重复性好, 上手简单, 得到主流学术界的追捧.</p>
+<p>学术界的共识是: 多层神经网络的计算模型, 实践效果不好,完全没有前途. 这是个死胡同.</p>
+<p>这个情况到本世纪初,变得如此糟糕, 以至于任何论文送到学术期刊时,研究者都不敢用 “神经网络”几个字,免得被粗暴拒绝.</p>
+<p>2003年, Geoffrey Hinton, 还在多伦多大学, 在神经网络的领域苦苦坚守.</p>
+<p>一个五十六岁的穷教授, 搞了三十多年没有前途的研究,要四处绞尽脑汁, 化缘申请研究经费. 他不是卢瑟 (loser) , 谁还是卢瑟?</p>
+<p>2003年在温哥华大都会酒店, 以Hinton 为首的十五名来自各地的不同专业的科学家, 和加拿大先进研究院 (Canadan Institue oF Advanced Research, 简称 CIFAR) 的基金管理负责人, Melvin Silverman 交谈.</p>
+<p><img src="/images/2016-05-19_10.png" alt="image"></p>
+<p>Silverman 问大家,为什么 CIFAR 要支持他们的研究项目.</p>
+<p>计算神经科学研究者, Sebastian Sung (现为普林斯顿大学教授), 回答道, “喔, 因为我们有点古怪. 如果CIFAR 要跳出自己的舒适区,寻找一个高风险,极具探索性的团体,就应当资助我们了!”</p>
+<p>最终 CIFAR 同意从2004年开始资助这个团体十年,总额一千万加元. CIFAR 成为当时, 世界上唯一支持神经网络研究的机构.</p>
+<p>不夸张地说, 如果没有 2004年 CIFAR 的资金支持, 人类在人工智能的研究上可能还会在黑暗中多摸索几年.</p>
+<p>Hinton 拿到资金支持不久,做的第一件事,就是先换个牌坊.</p>
+<p>两千多年前的刘三, 改了名换了姓, 叫什么 “汉高祖”.  鉴于”神经网络”口碑不好,也被 Hinton 改了名, 换了姓, 叫 “深度学习” (Deep Learning) 了.</p>
+<p>Hinton 的同事, 此后时不时会听到他突然在办公室大叫, “我知道人脑是如何工作的了!”.</p>
+<hr>
+<ul>
+<li><strong>(3)</strong></li>
+</ul>
+<p>2006年, Hinton 和合作者发表论文, “<a href="http://www.mitpressjournals.org/doi/abs/10.1162/neco.2006.18.7.1527#.Vz23sDB96Uk" target="_blank" rel="external">A fast algorithm for deep belief nets</a>“ (深信度网络的一种快速算法).</p>
+<p>在这篇论文里, Hinton 在算法上的核心,是借用了统计力学里的”玻尔兹曼分布”的概念 (一个微粒在某个状态的几率,和那个状态的能量的指数成反比, 和它的温度的倒数之指数成反比), 使用所谓的”限制玻尔兹曼机” (RBM)来学习.</p>
+<p><img src="/images/2016-05-19_11.png" alt="image"></p>
+<p>RBM 引入了统计力学常用的概率工具. 而在七十年代, 概率和不确定性恰恰是主流的人工智能的研究者极为痛恨的.</p>
+<p>RBM 相当于一个两层网络,同一层神经元之间不可连接 (所以叫 “限制”), 可以对神经网络实现”没有监督的训练” (unsupervised training). 深信度网络就是几层 RBM 叠加在一起.</p>
+<p>略掉技术细节, RBM 可以从输入数据中进行预先训练, 自己寻找发现重要的特征, 对神经网络连接的权重进行有效的初始化. 这属于一种叫做特征提取器 (feature extractor)的神经网络, 也称自动编码器 (autoencoder).</p>
+<p>经过 RBM 预先训练初始化后的神经网络,再用反向传播算法微调,效果就好多了.</p>
+<p>Hinton 后来指出, 深度学习的突破,除了计算蛮力的大幅度提高以外,聪明有效地对网络链接权重的初始化也是一个重要原因.</p>
+<p>Hinton 的论文里,经过六万个MNIST 数据库的图像培训后, 对于一万个测试图像的识别错误率最低降到了只有 1.25%.</p>
+<p>虽然这还不足以让主流学术界改变观点,但深度学习的发展已经见到一丝曙光.</p>
+<blockquote>
+<p>转自: <a href="http://wangchuan.blog.caixin.com/archives/144133" target="_blank" rel="external">王川博客-深度学习有多深？学了究竟有几分？</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="qgzang@USTC WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="qgzang@USTC Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag">#深度学习</a>
+          
+            <a href="/tags/神经网络/" rel="tag">#神经网络</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/19/深度学习有多深？学了究竟有几分？-三/" rel="next" title="（转） 深度学习有多深？学了究竟有几分？ 之 三">
+                <i class="fa fa-chevron-left"></i> （转） 深度学习有多深？学了究竟有几分？ 之 三
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/19/深度学习有多深？学了究竟有几分？-五/" rel="prev" title="（转） 深度学习有多深？学了究竟有几分？ 之 五">
+                （转） 深度学习有多深？学了究竟有几分？ 之 五 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/19/深度学习有多深？学了究竟有几分？-四/"
+           data-title="（转） 深度学习有多深？学了究竟有几分？ 之 四" data-url="http://qgzang.github.io/2016/05/19/深度学习有多深？学了究竟有几分？-四/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="qgzang@USTC" />
+          <p class="site-author-name" itemprop="name">qgzang@USTC</p>
+          <p class="site-description motion-element" itemprop="description">机器学习，数据挖掘，生物信息学</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qgzang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2025248243/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.52nlp.cn/" title="52nlp" target="_blank">52nlp</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.flickering.cn/" title="火光摇曳" target="_blank">火光摇曳</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/v_july_v" title="July博客" target="_blank">July博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.52cs.org/" title="我爱计算机" target="_blank">我爱计算机</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ml.memect.com/" title="机器学习日报" target="_blank">机器学习日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://py.memect.com/" title="Python日报" target="_blank">Python日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.52ml.net/" title="我爱机器学习" target="_blank">我爱机器学习</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cos.name/" title="统计之都" target="_blank">统计之都</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/p/1005051402400261/home?from=page_100505_profile&wvr=6&mod=data&is_all=1#place" title="微博资源" target="_blank">微博资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bd.memect.com/" title="大数据日报" target="_blank">大数据日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.weibo.com/haoawesome?is_all=1" title="好东西传送门" target="_blank">好东西传送门</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.biostacs.com/" title="BioStaCs" target="_blank">BioStaCs</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hi.ustc.edu.cn" title="HI Lab" target="_blank">HI Lab</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.matrix67.com/blog/" title="Matrix67" target="_blank">Matrix67</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">qgzang@USTC</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"qgzang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("PDFNypmIAGotxWHUJtuQPKqB-gzGzoHsz", "jEc0Mq7gBTQAYHrXVA5xL4b6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,988 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="深度学习,神经网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="(1)
+
+神经网络计算, 另一个常为人诟病的问题,是过度拟合 (overfitting).
+一个拥有大量自由参数的模型,很容易通过调试,和训练数据吻合.但这并不意味着,这就是个好模型.
+美国数学家冯纽曼 (John Von Neumann) 曾说, “给我四个参数,我的模型可以拟合一个大象. 给我五个参数, 我可以让它扭动它的鼻子.”
+
+神经网络模型的自由参数,现在往往超过一亿.如果说四个参数可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（转） 深度学习有多深？学了究竟有几分？ 之 七">
+<meta property="og:url" content="http://qgzang.github.io/2016/05/19/深度学习有多深？学了究竟有几分？-七/index.html">
+<meta property="og:site_name" content="数据小工">
+<meta property="og:description" content="(1)
+
+神经网络计算, 另一个常为人诟病的问题,是过度拟合 (overfitting).
+一个拥有大量自由参数的模型,很容易通过调试,和训练数据吻合.但这并不意味着,这就是个好模型.
+美国数学家冯纽曼 (John Von Neumann) 曾说, “给我四个参数,我的模型可以拟合一个大象. 给我五个参数, 我可以让它扭动它的鼻子.”
+
+神经网络模型的自由参数,现在往往超过一亿.如果说四个参数可">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-19_16.png">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-19_17.png">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-19_18.png">
+<meta property="og:updated_time" content="2016-05-19T13:35:00.857Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="（转） 深度学习有多深？学了究竟有几分？ 之 七">
+<meta name="twitter:description" content="(1)
+
+神经网络计算, 另一个常为人诟病的问题,是过度拟合 (overfitting).
+一个拥有大量自由参数的模型,很容易通过调试,和训练数据吻合.但这并不意味着,这就是个好模型.
+美国数学家冯纽曼 (John Von Neumann) 曾说, “给我四个参数,我的模型可以拟合一个大象. 给我五个参数, 我可以让它扭动它的鼻子.”
+
+神经网络模型的自由参数,现在往往超过一亿.如果说四个参数可">
+<meta name="twitter:image" content="http://qgzang.github.io/images/2016-05-19_16.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6282576673003013000,
+      author: '博主大大'
+    }
+  };
+</script>
+
+  <title> （转） 深度学习有多深？学了究竟有几分？ 之 七 | 数据小工 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?120ce9676d9776664e77da7970fbe0bf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">数据小工</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">数据分析实践者</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'j9cF3CsVQsBP9aGfCbRw','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                （转） 深度学习有多深？学了究竟有几分？ 之 七
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-19T21:21:00+08:00" content="2016-05-19">
+              2016-05-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/深度神经网络历史-深度学习有多深？学了究竟有几分？/" itemprop="url" rel="index">
+                    <span itemprop="name">深度神经网络历史:深度学习有多深？学了究竟有几分？</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/19/深度学习有多深？学了究竟有几分？-七/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/19/深度学习有多深？学了究竟有几分？-七/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/19/深度学习有多深？学了究竟有几分？-七/" class="leancloud_visitors" data-flag-title="（转） 深度学习有多深？学了究竟有几分？ 之 七">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><strong>(1)</strong></li>
+</ul>
+<p>神经网络计算, 另一个常为人诟病的问题,是过度拟合 (overfitting).</p>
+<p>一个拥有大量自由参数的模型,很容易通过调试,和训练数据吻合.但这并不意味着,这就是个好模型.</p>
+<p>美国数学家冯纽曼 (<a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank" rel="external">John Von Neumann</a>) 曾说, “给我四个参数,我的模型可以拟合一个大象. 给我五个参数, 我可以让它扭动它的鼻子.”</p>
+<p><img src="/images/2016-05-19_16.png" alt="image"></p>
+<p>神经网络模型的自由参数,现在往往超过一亿.如果说四个参数可以拟合一个大象的话,对于全世界总数不到一百万的大象来说,实在是游刃有余.</p>
+<p>一个模型好坏的试金石,不在于和现有数据的拟合度, 而在于它是否可以在全新的情况和数据面前,做出正确的判断和预测.</p>
+<p>金融界的人常会看到各种交易模型,许多模型面对历史数据的测试时,表现非常好,胜率极高.但是如果投资者天真地以为找到了致富的捷径, 把模型用于实际交易时,结果往往差强人意.</p>
+<p>另外一个典型的过度拟合的例子,可以在小孩教育上看到.许多家长把孩子从小就送到奥数,钢琴,小提琴等各类才艺和竞赛的培训班,唯恐孩子学得不够, 以后上不了好大学,找不到好工作.</p>
+<p>这实际上就是根据社会现有的经济结构做出的一种过度拟合的训练.</p>
+<p>当时代迅速发展,以前吃香的技能,职业突然被淘汰,孩子必须面对社会变化和学校教育体系的巨大落差,而无法迅速随机应变时,悲剧将很难避免.</p>
+<hr>
+<ul>
+<li><strong>(2)</strong></li>
+</ul>
+<p>解决这个问题的算法上的革新, 启迪又是来自生物界,来自有性繁殖和无性繁殖的对比.</p>
+<p>爱尔兰著名哲学家和诗人,奥斯卡*王尔德 (Oscar Wilde)先生曾有名言:</p>
+<blockquote>
+<p>“世界上所有东西都是关于性. 除了性本身” (Everything in the world is about sex. Except sex).</p>
+</blockquote>
+<p><img src="/images/2016-05-19_17.png" alt="image"></p>
+<p>直觉上,有性繁殖是为了生物进化,适应环境. 但是如果一个已经非常健康的个体, 为什么还要通过有性繁殖, 抛弃掉自己一半的优秀基因,去和另外一个个体合作, 制造下一代呢?</p>
+<p>无性生殖的优点是节能省时,无须浪费时间求偶交配.但致命的弱点是,基因没有任何变化,遗传病很容易被传播到下一代,进而降低生存的概率.</p>
+<p>加州大学伯克利分校学者 <a href="https://simons.berkeley.edu/people/adi-livnat" target="_blank" rel="external">Adi Livnat</a> 在2007年的论文, “关于性在进化中的角色的混合能力理论 “(A mixability theory of the role of sex in evolution )中通过模拟计算得出下述结论:</p>
+<p>性在生物进化中的目的,不是制造适合某个单一环境的, 最优秀的个体基因,而是为了制造最容易和其它多种基因合作的基因,这样在多变的外界环境下,总有一款可以生存延续下来.</p>
+<p>优秀个体在有性繁殖中,虽然损失了一半的基因,短期内看上去不是好事.但是长期看,生物组织整体的存活能力,更加稳健强大.</p>
+<p>有性繁殖,在金融投资上的一个类比是: 把财富分散到不同种类的资产上, 定期重新调整再平衡. 这样做的缺点是,某个表现特别好的资产可能会被过早的卖掉. 但优点在于,让投资组合不过分依赖于某个单一资产,在金融风暴中得以生存下来.</p>
+<p>歌舞升平的年代,人们总是互相攀比投资回报,没有觉得生存,保本是个问题.当金融黑天鹅降临时,才幡然醒悟,资本和生命的保全,而不是寻欢作乐, 才是真正最重要的.</p>
+<hr>
+<ul>
+<li><strong>(3)</strong></li>
+</ul>
+<p>2012年七月, Hinton 教授发表论文, “通过阻止特征检测器的共同作用来改进神经网络” (<a href="https://arxiv.org/pdf/1207.0580.pdf" target="_blank" rel="external">Improving neural networks by preventing co-adaptation of feature detectors</a>).</p>
+<p>论文中为了解决过度拟合的问题,采用了一种新的称为”丢弃” (Dropout) 的算法.</p>
+<p>丢弃算法的具体实施,是在每次培训中, 给每个神经元一定的几率 (比如 50%),假装它不存在,计算中忽略不计.</p>
+<p><img src="/images/2016-05-19_18.png" alt="image"></p>
+<p>从一个角度看, 丢弃算法,每次训练时使用的是不同架构的神经网络 (因为每次都有部分神经元装死),最后训练出来的东西,相当于不同架构的神经网络模型的平均值.</p>
+<p>从生物的有性繁殖角度看,丢弃算法,试图训练不同的小部分神经元,通过多种可能的交配组合,获得接近理想值的答案.</p>
+<p>使用丢弃算法的神经网络,被强迫用不同的,独立的,神经元的子集来接受学习训练. 这样网络更强健,避免了过度拟合的死胡同,不会因为外在输入的很小变化,导致输出质量的很大差异.</p>
+<p>论文结果显示,使用丢弃算法后, 在诸如 MINST, TIMID, CIFAR-10 等多个经典语音和图像识别的问题中, 神经网络在测试数据中的错误率, 相对于经典的深度学习算法,都获得了可观的进步 (错误率下降了 10% 到 30% 不等).</p>
+<hr>
+<ul>
+<li><strong>(4)</strong></li>
+</ul>
+<p>2012年的夏天, 距离 Hinton 教授 1970年开始攻读博士学位, 距离 Rosenblatt 1971年溺水身亡, 一晃四十多年过去了.</p>
+<p>深度学习的技术,此时有了:</p>
+<ul>
+<li>GPU快捷的计算速度,</li>
+<li>海量的训练数据,</li>
+<li>更多新的聪明的算法.</li>
+</ul>
+<p>条件已经成熟, 该用实验结果,证明自己相对别的技术,无可辩驳的优越性了.</p>
+<p>有诗为证:</p>
+<blockquote>
+<p>“鸿鹄高飞，一举千里。<br> 羽翼已就，横绝四海。<br> 横绝四海，当可奈何！<br> 虽有缯缴，尚安所施! “</p>
+<p>转自: <a href="http://wangchuan.blog.caixin.com/archives/144507" target="_blank" rel="external">王川博客-深度学习有多深？学了究竟有几分？</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="qgzang@USTC WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="qgzang@USTC Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag">#深度学习</a>
+          
+            <a href="/tags/神经网络/" rel="tag">#神经网络</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/19/深度学习有多深？学了究竟有几分？-六/" rel="next" title="（转） 深度学习有多深？学了究竟有几分？ 之 六">
+                <i class="fa fa-chevron-left"></i> （转） 深度学习有多深？学了究竟有几分？ 之 六
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/19/深度学习有多深？学了究竟有几分？-八/" rel="prev" title="（转） 深度学习有多深？学了究竟有几分？ 之 八">
+                （转） 深度学习有多深？学了究竟有几分？ 之 八 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/19/深度学习有多深？学了究竟有几分？-七/"
+           data-title="（转） 深度学习有多深？学了究竟有几分？ 之 七" data-url="http://qgzang.github.io/2016/05/19/深度学习有多深？学了究竟有几分？-七/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="qgzang@USTC" />
+          <p class="site-author-name" itemprop="name">qgzang@USTC</p>
+          <p class="site-description motion-element" itemprop="description">机器学习，数据挖掘，生物信息学</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qgzang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2025248243/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.52nlp.cn/" title="52nlp" target="_blank">52nlp</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.flickering.cn/" title="火光摇曳" target="_blank">火光摇曳</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/v_july_v" title="July博客" target="_blank">July博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.52cs.org/" title="我爱计算机" target="_blank">我爱计算机</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ml.memect.com/" title="机器学习日报" target="_blank">机器学习日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://py.memect.com/" title="Python日报" target="_blank">Python日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.52ml.net/" title="我爱机器学习" target="_blank">我爱机器学习</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cos.name/" title="统计之都" target="_blank">统计之都</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/p/1005051402400261/home?from=page_100505_profile&wvr=6&mod=data&is_all=1#place" title="微博资源" target="_blank">微博资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bd.memect.com/" title="大数据日报" target="_blank">大数据日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.weibo.com/haoawesome?is_all=1" title="好东西传送门" target="_blank">好东西传送门</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.biostacs.com/" title="BioStaCs" target="_blank">BioStaCs</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hi.ustc.edu.cn" title="HI Lab" target="_blank">HI Lab</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.matrix67.com/blog/" title="Matrix67" target="_blank">Matrix67</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">qgzang@USTC</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"qgzang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("PDFNypmIAGotxWHUJtuQPKqB-gzGzoHsz", "jEc0Mq7gBTQAYHrXVA5xL4b6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
