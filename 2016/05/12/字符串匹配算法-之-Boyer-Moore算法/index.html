@@ -84,28 +84,38 @@
 
 
 
-<meta name="description" content="前言算法原理算法复杂度
-时间复杂度
-空间复杂度
+<meta name="description" content="前言算法原理Boyer-Moore算法原理:Boyer-Moore算法是一种基于后缀匹配的模式串匹配算法，后缀匹配就是模式串从右到左开始比较，但模式串的移动还是从左到右的。字符串匹配的关键就是模式串的如何移动才是最高效的，Boyer-Moore为了做到这点定义了两个规则：坏字符规则和好后缀规则，下面图解给出定义：
+  
+下面分别针对利用坏字符规则和好后缀规则移动模式串进行介绍：
 
-Python实现算法测试总结参考">
+坏字符规则
+
+1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符串匹配算法 之 Boyer-Moore算法">
 <meta property="og:url" content="http://qgzang.github.io/2016/05/12/字符串匹配算法-之-Boyer-Moore算法/index.html">
 <meta property="og:site_name" content="数据小工">
-<meta property="og:description" content="前言算法原理算法复杂度
-时间复杂度
-空间复杂度
+<meta property="og:description" content="前言算法原理Boyer-Moore算法原理:Boyer-Moore算法是一种基于后缀匹配的模式串匹配算法，后缀匹配就是模式串从右到左开始比较，但模式串的移动还是从左到右的。字符串匹配的关键就是模式串的如何移动才是最高效的，Boyer-Moore为了做到这点定义了两个规则：坏字符规则和好后缀规则，下面图解给出定义：
+  
+下面分别针对利用坏字符规则和好后缀规则移动模式串进行介绍：
 
-Python实现算法测试总结参考">
-<meta property="og:updated_time" content="2016-05-12T04:47:26.807Z">
+坏字符规则
+
+1">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-12_2.png">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-12_3.png">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-12_4.png">
+<meta property="og:updated_time" content="2016-05-12T09:15:36.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="字符串匹配算法 之 Boyer-Moore算法">
-<meta name="twitter:description" content="前言算法原理算法复杂度
-时间复杂度
-空间复杂度
+<meta name="twitter:description" content="前言算法原理Boyer-Moore算法原理:Boyer-Moore算法是一种基于后缀匹配的模式串匹配算法，后缀匹配就是模式串从右到左开始比较，但模式串的移动还是从左到右的。字符串匹配的关键就是模式串的如何移动才是最高效的，Boyer-Moore为了做到这点定义了两个规则：坏字符规则和好后缀规则，下面图解给出定义：
+  
+下面分别针对利用坏字符规则和好后缀规则移动模式串进行介绍：
 
-Python实现算法测试总结参考">
+坏字符规则
+
+1">
+<meta name="twitter:image" content="http://qgzang.github.io/images/2016-05-12_2.png">
 
 
 
@@ -378,11 +388,46 @@ Python实现算法测试总结参考">
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><h1 id="算法复杂度"><a href="#算法复杂度" class="headerlink" title="算法复杂度"></a>算法复杂度</h1><ul>
-<li>时间复杂度</li>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><h4 id="Boyer-Moore算法原理"><a href="#Boyer-Moore算法原理" class="headerlink" title="Boyer-Moore算法原理:"></a>Boyer-Moore算法原理:</h4><p>Boyer-Moore算法是一种基于后缀匹配的模式串匹配算法，后缀匹配就是模式串从右到左开始比较，但模式串的移动还是从左到右的。字符串匹配的关键就是模式串的如何移动才是最高效的，Boyer-Moore为了做到这点定义了两个规则：坏字符规则和好后缀规则，下面图解给出定义：</p>
+<p>  <img src="/images/2016-05-12_2.png" alt="image"></p>
+<p>下面分别针对利用坏字符规则和好后缀规则移动模式串进行介绍：</p>
+<ul>
+<li><p>坏字符规则</p>
+<ul>
+<li>1.”坏字符”定义为匹配不上模式字符的字符，如果”坏字符”没有出现在模式字符中，可以直接将模式串移动到”坏字符”的下一个字符：</li>
+</ul>
+<p><img src="/images/2016-05-12_3.png" alt="images"></p>
+<ul>
+<li><p>2.”好后缀”定义为模式串中跟母串完全匹配的字符串，如果”坏字符”出现在模式串中，则将模式串最靠近”好后缀”的坏字符与母串的坏字符对齐：</p>
+<p><img src="/images/2016-05-12_4.png" alt="images"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>(注：如果模式串P是babababab，则是将第二个b与母串的b对齐)</p>
+<ul>
+<li>好后缀规则(分三种情况)<ul>
+<li>1.模式串中有子串匹配上好后缀，此时移动模式串，让该子串和好后缀对齐即可，如果超过一个子串匹配上好后缀，则选择最靠靠近好后缀的子串对齐。</li>
+<li>2.模式串中没有子串匹配上后后缀，此时需要寻找模式串的一个最长前缀，并让该前缀等于好后缀的后缀，寻找到该前缀后，让该前缀和好后缀对齐即可。<br>其实，1和2都可以看成模式串还含有好后缀串（好后缀子串也是好后缀）。</li>
+<li>3.模式串中没有子串匹配上后后缀，并且在模式串中找不到最长前缀，让该前缀等于好后缀的后缀。此时，直接移动模式到好后缀的下一个字符。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Boyer-Moore算法步骤"><a href="#Boyer-Moore算法步骤" class="headerlink" title="Boyer-Moore算法步骤"></a>Boyer-Moore算法步骤</h4><ul>
+<li>1.对模式子串进行预处理</li>
+</ul>
+<p>Boyer-Moore算法实现必须对模式串进行预处理，得到坏字符规则和好后缀规则移动的映射表，下面代码中MakeSkip是建立坏字符规则移动的映射表，MakeShift是建立好后缀规则的移动映射表。<br>MakeSkip是构造数组skip[]，skip[k]表示字符k距离模式串末尾的距离。<br>MakeShfit是构造数组shfit[]，shfit[k]表示模式串的以k为边界的后缀子串的最靠近的模式子串（或最前缀子串）到模式子串末尾的距离，例如：abcab，shfit[3]=3和shfit[2]=3（即都是第一个b到末尾的距离），k=2时，后缀子串为cab，这时只有最长前缀ab，shfit[2]=3。</p>
+<ul>
+<li>2.从b_idx开始查找，得到坏字符和好后缀，得到最大移动距离，移动b_idx，直至b_idx到达母串的末尾。</li>
+</ul>
+<h1 id="算法复杂度"><a href="#算法复杂度" class="headerlink" title="算法复杂度"></a>算法复杂度</h1><ul>
+<li>时间复杂度<br>算法的时间复杂度最差（匹配不上）是O(n×m)，最好是O(n),其中n为母串的长度，m为模式串的长度。BM算法时间复杂度最好是O(n/(m+1))</li>
 <li>空间复杂度</li>
 </ul>
-<h1 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h1><h1 id="算法测试"><a href="#算法测试" class="headerlink" title="算法测试"></a>算法测试</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1>
+<h1 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h1><h1 id="算法测试"><a href="#算法测试" class="headerlink" title="算法测试"></a>算法测试</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html" target="_blank" rel="external">阮一峰博客</a></li>
+</ul>
+
       
     </div>
 
@@ -515,7 +560,7 @@ Python实现算法测试总结参考">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -523,7 +568,7 @@ Python实现算法测试总结参考">
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -532,7 +577,7 @@ Python实现算法测试总结参考">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -647,7 +692,7 @@ Python实现算法测试总结参考">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法原理"><span class="nav-number">2.</span> <span class="nav-text">算法原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法复杂度"><span class="nav-number">3.</span> <span class="nav-text">算法复杂度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python实现"><span class="nav-number">4.</span> <span class="nav-text">Python实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法测试"><span class="nav-number">5.</span> <span class="nav-text">算法测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法原理"><span class="nav-number">2.</span> <span class="nav-text">算法原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Boyer-Moore算法原理"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">Boyer-Moore算法原理:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Boyer-Moore算法步骤"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">Boyer-Moore算法步骤</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法复杂度"><span class="nav-number">3.</span> <span class="nav-text">算法复杂度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python实现"><span class="nav-number">4.</span> <span class="nav-text">Python实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法测试"><span class="nav-number">5.</span> <span class="nav-text">算法测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>

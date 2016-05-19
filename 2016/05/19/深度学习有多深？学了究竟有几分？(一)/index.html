@@ -1,0 +1,981 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="深度学习,神经网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="(1)
+
+2016 年一月底，人工智能的研究领域，发生了两件大事.
+先是一月二十四号，ＭIT 的教授，人工智能研究的先驱者，Marvin Minsky 去世，享年８９岁.
+
+三天之后，谷歌在自然杂志上正式公开发表论文,宣布其以深度学习技术为基础的电脑程序 AlphaGo, 在2015年十月,连续五局击败欧洲冠军,职业二段樊辉.
+这是第一次机器击败职业围棋选手. 距离97年IBM电脑击败国际象棋世">
+<meta property="og:type" content="article">
+<meta property="og:title" content="转 深度学习有多深？学了究竟有几分？一">
+<meta property="og:url" content="http://qgzang.github.io/2016/05/19/深度学习有多深？学了究竟有几分？(一)/index.html">
+<meta property="og:site_name" content="数据小工">
+<meta property="og:description" content="(1)
+
+2016 年一月底，人工智能的研究领域，发生了两件大事.
+先是一月二十四号，ＭIT 的教授，人工智能研究的先驱者，Marvin Minsky 去世，享年８９岁.
+
+三天之后，谷歌在自然杂志上正式公开发表论文,宣布其以深度学习技术为基础的电脑程序 AlphaGo, 在2015年十月,连续五局击败欧洲冠军,职业二段樊辉.
+这是第一次机器击败职业围棋选手. 距离97年IBM电脑击败国际象棋世">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-19_1.png">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-19_2.png">
+<meta property="og:image" content="http://qgzang.github.io/images/2016-05-19_3.png">
+<meta property="og:updated_time" content="2016-05-19T12:21:38.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="转 深度学习有多深？学了究竟有几分？一">
+<meta name="twitter:description" content="(1)
+
+2016 年一月底，人工智能的研究领域，发生了两件大事.
+先是一月二十四号，ＭIT 的教授，人工智能研究的先驱者，Marvin Minsky 去世，享年８９岁.
+
+三天之后，谷歌在自然杂志上正式公开发表论文,宣布其以深度学习技术为基础的电脑程序 AlphaGo, 在2015年十月,连续五局击败欧洲冠军,职业二段樊辉.
+这是第一次机器击败职业围棋选手. 距离97年IBM电脑击败国际象棋世">
+<meta name="twitter:image" content="http://qgzang.github.io/images/2016-05-19_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6282576673003013000,
+      author: '博主大大'
+    }
+  };
+</script>
+
+  <title> 转 深度学习有多深？学了究竟有几分？一 | 数据小工 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?120ce9676d9776664e77da7970fbe0bf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">数据小工</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">数据分析实践者</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'j9cF3CsVQsBP9aGfCbRw','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                转 深度学习有多深？学了究竟有几分？一
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-19T19:42:49+08:00" content="2016-05-19">
+              2016-05-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/深度神经网络历史-深度学习有多深？学了究竟有几分？/" itemprop="url" rel="index">
+                    <span itemprop="name">深度神经网络历史:深度学习有多深？学了究竟有几分？</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/19/深度学习有多深？学了究竟有几分？(一)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/19/深度学习有多深？学了究竟有几分？(一)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/19/深度学习有多深？学了究竟有几分？(一)/" class="leancloud_visitors" data-flag-title="转 深度学习有多深？学了究竟有几分？一">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><strong>(1)</strong></li>
+</ul>
+<p>2016 年一月底，人工智能的研究领域，发生了两件大事.</p>
+<p>先是一月二十四号，ＭIT 的教授，人工智能研究的先驱者，<a href="https://en.wikipedia.org/wiki/Marvin_Minsky" target="_blank" rel="external">Marvin Minsky</a> 去世，享年８９岁.</p>
+<p><img src="/images/2016-05-19_1.png" alt="image"></p>
+<p>三天之后，谷歌在自然杂志上正式公开发表论文,宣布其以深度学习技术为基础的电脑程序 AlphaGo, 在2015年十月,连续五局击败欧洲冠军,职业二段樊辉.</p>
+<p>这是第一次机器击败职业围棋选手. 距离97年IBM电脑击败国际象棋世界冠军,一晃近二十年了.</p>
+<p>极具讽刺意义的是, Minsky 教授,一直不看好深度学习的概念. 他曾在1969年出版了 Perceptron (感知器) 一书,指出了神经网络技术 (就是深度学习的前身)的局限性. 这本书直接导致了神经网络研究的将近二十年的长期低潮.</p>
+<p>神经网络研究的历史,是怎样的?</p>
+<p>深度学习有多深? 学了究竟有几分?</p>
+<hr>
+<ul>
+<li><strong>(2)</strong></li>
+</ul>
+<p>人工智能研究的方向之一, 是以所谓 “<a href="http://www.intsci.ac.cn/ai/es.html" target="_blank" rel="external">专家系统</a>“ 为代表的, 用大量 “如果-就” (If - Then) 规则定义的, 自上而下的思路.</p>
+<p><a href="http://blog.sciencenet.cn/blog-696950-697101.html" target="_blank" rel="external">人工神经网络</a>( Artifical Neural Network),标志着另外一种,自下而上的思路.</p>
+<p>神经网络没有一个严格的正式定义. 它的基本特点, 是试图模仿大脑的神经元之间传递,处理信息的模式.</p>
+<p><img src="/images/2016-05-19_2.png" alt="image"></p>
+<p>一个计算模型,要划分为神经网络,通常需要大量彼此连接的节点 (也称 ‘神经元’),并且具备两个特性:</p>
+<p>每个神经元, 通过某种特定的输出函数 (也叫激励函数 activation function),计算处理来自其它相邻神经元的加权输入值.</p>
+<p>神经元之间的信息传递的强度,用所谓加权值来定义,算法会不断自我学习,调整这个加权值.</p>
+<p>在此基础上,神经网络的计算模型, 依靠大量的数据来训练, 还需要:</p>
+<ul>
+<li><strong>成本函数</strong>  (cost function)<br>用来定量评估根据特定输入值, 计算出来的输出结果,离正确值有多远,结果有多靠谱.</li>
+<li><strong>学习算法</strong> ( learning algorithm )<br>这是根据成本函数的结果, 自学, 纠错, 最快地找到神经元之间最优化的加权值.</li>
+</ul>
+<p>用小明,小红和隔壁老王们都可以听懂的语言来解释, 神经网络算法的核心就是:</p>
+<blockquote>
+<p><strong>计算</strong>, <strong>连接</strong>, <strong>评估</strong>, <strong>纠错</strong>, <strong>疯狂培训</strong></p>
+</blockquote>
+<p>随着神经网络研究的不断变迁,其计算特点 ,和传统的生物神经元的连接模型渐渐脱钩.</p>
+<p>但是它保留的精髓是: 非线性,分布式, 并行计算, 自适应, 自组织.</p>
+<hr>
+<ul>
+<li><strong>(3)</strong></li>
+</ul>
+<p>神经网络作为一个计算模型的理论,1943年最初由科学家 <a href="https://en.wikipedia.org/wiki/Warren_Sturgis_McCulloch" target="_blank" rel="external">Warren McCulloch</a> 和 <a href="https://en.wikipedia.org/wiki/Walter_Pitts" target="_blank" rel="external">Walter Pitts</a> 提出.</p>
+<p>康内尔大学教授 <a href="https://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank" rel="external">Frank Rosenblatt</a> 1957年提出的”感知器” (Perceptron),是第一个用算法来精确定义神经网络, 第一个具有自组织自学习能力的数学模型,是日后许多新的神经网络模型的始祖.</p>
+<p><img src="/images/2016-05-19_3.png" alt="image"></p>
+<p>Rosenblatt 乐观地预测,感知器最终可以 “学习,做决定,翻译语言”. 感知器的技术,六十年代一度走红,美国海军曾出资支持这个技术的研究, 期望它 “以后可以自己走, 说话, 看, 读, 自我复制, 甚至拥有自我意识”.</p>
+<p>Rosenblatt 和 Minsky 实际上是间隔一级的高中校友.但是六十年代, 两个人在感知器的问题上,展开了长时间的激辩. Rosenblatt 认为感应器将无所不能, Minsky 则认为它应用有限.</p>
+<p>1969 年, Marvin Minsky 和 <a href="https://en.wikipedia.org/wiki/Seymour_Papert" target="_blank" rel="external">Seymour Papert</a> 出版了新书: “感知器: 计算几何简介”.  书中论证了感知器模型的两个关键问题:</p>
+<ul>
+<li><strong>第一</strong>, 单层的神经网络无法解决不可线性分割的问题, 典型例子如异或门, XOR Circuit ( 通俗地说, 异或门就是: 两个输入如果是异性恋,输出为一. 两个输入如果是同性恋,输出为零 )</li>
+<li><strong>第二</strong>, 更致命的问题是,当时的电脑完全没有能力完成神经网络模型所需要的超大的计算量.</li>
+</ul>
+<p>此后的十几年,以神经网络为基础的人工智能研究进入低潮,相关项目长期无法得到政府经费支持,这段时间被称为业界的核冬天.</p>
+<p>Rosenblatt 自己则没有见证日后神经网络研究的复兴. 1971年他43岁生日时,不幸在海上开船时因为事故而丧生.</p>
+<blockquote>
+<p>转自: <a href="http://wangchuan.blog.caixin.com/archives/142598" target="_blank" rel="external">王川博客-深度学习有多深？学了究竟有几分？</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.jpg" alt="qgzang@USTC WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="qgzang@USTC Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag">#深度学习</a>
+          
+            <a href="/tags/神经网络/" rel="tag">#神经网络</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/12/Anaconda-Python-2-7-64-bit-windows-安装中-Errno-9-Bad-file-descriptor解决方法/" rel="next" title="Anaconda Python 2.7 64-bit windows 安装中[Errno 9] Bad file descriptor解决方法">
+                <i class="fa fa-chevron-left"></i> Anaconda Python 2.7 64-bit windows 安装中[Errno 9] Bad file descriptor解决方法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/19/深度学习有多深？学了究竟有几分？(二)/" rel="prev" title="转 深度学习有多深？学了究竟有几分？二">
+                转 深度学习有多深？学了究竟有几分？二 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/19/深度学习有多深？学了究竟有几分？(一)/"
+           data-title="转 深度学习有多深？学了究竟有几分？一" data-url="http://qgzang.github.io/2016/05/19/深度学习有多深？学了究竟有几分？(一)/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="qgzang@USTC" />
+          <p class="site-author-name" itemprop="name">qgzang@USTC</p>
+          <p class="site-description motion-element" itemprop="description">机器学习，数据挖掘，生物信息学</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qgzang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2025248243/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.52nlp.cn/" title="52nlp" target="_blank">52nlp</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.flickering.cn/" title="火光摇曳" target="_blank">火光摇曳</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/v_july_v" title="July博客" target="_blank">July博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.52cs.org/" title="我爱计算机" target="_blank">我爱计算机</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ml.memect.com/" title="机器学习日报" target="_blank">机器学习日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://py.memect.com/" title="Python日报" target="_blank">Python日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.52ml.net/" title="我爱机器学习" target="_blank">我爱机器学习</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cos.name/" title="统计之都" target="_blank">统计之都</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/p/1005051402400261/home?from=page_100505_profile&wvr=6&mod=data&is_all=1#place" title="微博资源" target="_blank">微博资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bd.memect.com/" title="大数据日报" target="_blank">大数据日报</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.weibo.com/haoawesome?is_all=1" title="好东西传送门" target="_blank">好东西传送门</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.biostacs.com/" title="BioStaCs" target="_blank">BioStaCs</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hi.ustc.edu.cn" title="HI Lab" target="_blank">HI Lab</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.matrix67.com/blog/" title="Matrix67" target="_blank">Matrix67</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">qgzang@USTC</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"qgzang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("PDFNypmIAGotxWHUJtuQPKqB-gzGzoHsz", "jEc0Mq7gBTQAYHrXVA5xL4b6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
